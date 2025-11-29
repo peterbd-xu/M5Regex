@@ -38,7 +38,10 @@ public class Main {
      * @return whether the string satisfies the password requirements
      */
     public static boolean checkForPassword(String str, int minLength) {
-        final boolean propertyOne = Pattern.matches("REPLACE WITH CORRECT REGEX", str);
+        if (str == null) {
+            return false;
+        }
+        final boolean propertyOne = Pattern.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{"+Integer.toString(minLength)+",}$", str);
         // as needed, modify this code.
         return propertyOne;
     }
@@ -55,9 +58,12 @@ public class Main {
      * @return a list containing the email addresses in the string.
      */
     public static List<String> extractEmails(String str) {
-        final Pattern pattern = Pattern.compile("REPLACE WITH CORRECT REGEX");
+        final List<String> result = new ArrayList<String>();
+        if (str == null) {
+            return result;
+        }
+        final Pattern pattern = Pattern.compile("([A-Za-z0-9]+(@mail.utoronto.ca|@utoronto.ca))+");
         final Matcher matcher = pattern.matcher(str);
-        final List<String> result = new ArrayList<>();
         while (matcher.find()) {
             result.add(matcher.group());
         }
@@ -76,6 +82,9 @@ public class Main {
      * @return whether str contains the same capital letter twice.
      */
     public static boolean checkForDoubles(String str) {
-        return str.matches("replace with correct regex");
+        if (str == null) {
+            return false;
+        }
+        return str.matches("([A-Z]).*\\1.*");
     }
 }
